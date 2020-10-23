@@ -20,10 +20,6 @@ jobs:
     - name: Set up Docker Buildx
       uses: crazy-max/ghaction-docker-buildx@v3
 
-    - name: Login to docker.io registry
-      run: |
-        echo ${{ secrets. DOCKER_REGISTRY_PASSWORD }} | docker login --username wsmoogle --password-stdin
-
     - name: Cache Docker layers
       uses: actions/cache@v2
       id: cache
@@ -40,21 +36,14 @@ jobs:
           --cache-to "type=local,dest=/tmp/.buildx-cache" \
           --platform linux/amd64 \
           --output "type=image,push=true" \
-          --tag weseek/nginx-nchan:${{ env.RELEASE_VERSION }} \
-          --tag weseek/nginx-nchan:latest \
+          --tag variograma/nginx-nchan:${{ env.RELEASE_VERSION }} \
+          --tag variograma/nginx-nchan:latest \
           --file ./mainline/Dockerfile ./mainline
 
     - name: Update Docker Hub Description
       uses: peter-evans/dockerhub-description@v2.1.0
       env:
-        DOCKERHUB_USERNAME: wsmoogle
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
         DOCKERHUB_PASSWORD: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
-        DOCKERHUB_REPOSITORY: weseek/nginx-nchan
+        DOCKERHUB_REPOSITORY: variograma/nginx-nchan
         README_FILEPATH: ./README.md
-
-    - name: Slack Notification
-      uses: weseek/ghaction-release-slack-notification@master
-      with:
-        channel: '#dev'
-        url: ${{ secrets.SLACK_WEBHOOK_URL }}
-        created_tag: 'v${{ env.RELEASE_VERSION }}'
