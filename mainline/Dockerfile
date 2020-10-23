@@ -5,7 +5,7 @@
 ## builder
 ##
 FROM debian:buster-slim AS builder
-LABEL maintainer Yuki Takei <yuki@weseek.co.jp>
+LABEL maintainer Manuel Gomes <mg@variograma.com> based on work by Yuki Takei <yuki@weseek.co.jp>
 
 ENV NGINX_VERSION 1.19.1
 ENV NGINX_PKG_RELEASE 1~buster
