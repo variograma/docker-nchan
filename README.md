@@ -1,3 +1,7 @@
+![Release](https://github.com/variograma/docker-nchan/workflows/Release/badge.svg)
+
+Forked from (https://github.com/weseek/docker-nchan)
+
 # docker-nchan
 [NGINX](nginx.org/) + [Nchan](https://nchan.io/) Dockerfiles 
 
